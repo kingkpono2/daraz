@@ -27,3 +27,4 @@ h1,h2,h3,.serif,.price{font-family:'Bodoni MT','Times New Roman',serif}h1{font-w
 
 /* Constrain editorial artwork independently from the height of adjacent copy. */
 .craft-art{position:relative;min-width:0;min-height:300px}.craft-art>.image-window{position:absolute;top:0;bottom:0;height:100%;overflow:hidden}.craft-art>.image-window:first-child{left:0;width:67%}.craft-art>.image-window:last-child{right:0;width:33%}
+.footer-social{display:flex;flex-wrap:wrap;gap:10px;list-style:none;margin:16px 0 20px;padding:0}.footer-grid .footer-social a{display:grid;place-items:center;width:36px;height:36px;margin:0;border:1px solid var(--line);border-radius:50%;color:var(--ink);transition:color .2s,background-color .2s,border-color .2s}.footer-social svg{width:17px;height:17px}.footer-grid .footer-social a:hover{color:var(--gold);border-color:var(--gold);background:#896d3c0d}.footer-social a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
