@@ -3,7 +3,7 @@
 get_header();
 $is_product_search = 'product' === get_query_var( 'post_type' ) || ( isset( $_GET['post_type'] ) && 'product' === sanitize_key( wp_unslash( $_GET['post_type'] ) ) );
 ?>
-<main id="primary" class="site-main container content-container">
+<main id="primary" class="site-main container content-container<?php echo $is_product_search ? ' woocommerce' : ''; ?>">
 <header class="page-intro"><p class="eyebrow"><?php esc_html_e( 'SEARCH RESULTS', 'daraz-law-shop' ); ?></p><h1><?php printf( esc_html__( 'Results for “%s”', 'daraz-law-shop' ), esc_html( get_search_query() ) ); ?></h1></header>
 <?php if ( have_posts() ) :
 	if ( $is_product_search && function_exists( 'woocommerce_product_loop_start' ) ) :
