@@ -123,7 +123,7 @@ if ( $thumbnail ) {
 </section>
 <?php endif; endif; ?>
 
-<section class="container editorial-section featured-section" aria-labelledby="featured-heading">
+<section class="container editorial-section featured-section woocommerce" aria-labelledby="featured-heading">
 <div class="section-heading"><div><p class="eyebrow"><?php esc_html_e( '02 / THE ESSENTIALS', 'daraz-law-shop' ); ?></p><h2 id="featured-heading"><?php esc_html_e( 'Selected for the profession.', 'daraz-law-shop' ); ?></h2></div><a class="text-link" href="<?php echo esc_url( $shop_url ); ?>"><?php esc_html_e( 'Shop all products', 'daraz-law-shop' ); ?> <span aria-hidden="true">↗</span></a></div>
 <?php if ( class_exists( 'WooCommerce' ) ) :
 	$ids = function_exists( 'wc_get_featured_product_ids' ) ? array_slice( array_map( 'absint', wc_get_featured_product_ids() ), 0, 12 ) : array();
