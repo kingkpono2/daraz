@@ -1,7 +1,7 @@
 <?php
 /** Full-width WooCommerce cart template. @package Daraz_Law_Shop */
 get_header(); ?>
-<main id="primary" class="site-main container content-container commerce-page commerce-cart">
+<main id="primary" class="site-main container content-container woocommerce commerce-page commerce-cart">
 <?php while ( have_posts() ) : the_post(); ?>
 <header class="page-intro commerce-page-intro">
 <p class="eyebrow"><?php esc_html_e( 'YOUR SHOPPING BAG', 'daraz-law-shop' ); ?></p>
