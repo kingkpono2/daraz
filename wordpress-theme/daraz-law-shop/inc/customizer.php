@@ -48,8 +48,9 @@ function daraz_customize_register( $wp_customize ) {
 		'phone'     => array( __( 'Phone (international format)', 'daraz-law-shop' ), '+2348033910334', 'sanitize_text_field' ),
 		'email'     => array( __( 'Contact email', 'daraz-law-shop' ), 'info@darazlawshop.com', 'sanitize_email' ),
 		'whatsapp'  => array( __( 'WhatsApp number (digits only)', 'daraz-law-shop' ), '2348033910334', 'daraz_sanitize_digits' ),
-		'instagram' => array( __( 'Instagram page URL', 'daraz-law-shop' ), '', 'esc_url_raw' ),
-		'facebook'  => array( __( 'Facebook page URL', 'daraz-law-shop' ), '', 'esc_url_raw' ),
+		'instagram' => array( __( 'Instagram page URL', 'daraz-law-shop' ), 'https://www.instagram.com/darazlawshop/', 'esc_url_raw' ),
+		'facebook'  => array( __( 'Facebook page URL', 'daraz-law-shop' ), 'https://web.facebook.com/porthase', 'esc_url_raw' ),
+		'x' => array( __( 'X / Twitter profile URL', 'daraz-law-shop' ), 'https://twitter.com/darazlawshop', 'esc_url_raw' ),
 	);
 	foreach ( $contacts as $key => $values ) {
 		$id = 'daraz_' . $key;
@@ -60,6 +61,68 @@ function daraz_customize_register( $wp_customize ) {
 			'type' => 'text',
 		) );
 	}
+
+	$wp_customize->add_setting( 'daraz_announcement_message', array(
+		'default' => 'Professional legalwear for the Nigerian bar',
+		'sanitize_callback' => 'sanitize_text_field',
+	) );
+	$wp_customize->add_control( 'daraz_announcement_message', array(
+		'label' => __( 'Announcement bar message', 'daraz-law-shop' ),
+		'section' => 'daraz_homepage',
+		'type' => 'text',
+		'description' => __( 'Mention free shipping or returns only if genuinely offered.', 'daraz-law-shop' ),
+	) );
+
+	$wp_customize->add_setting( 'daraz_whatsapp_products', array(
+		'default' => true,
+		'sanitize_callback' => 'rest_sanitize_boolean',
+	) );
+	$wp_customize->add_control( 'daraz_whatsapp_products', array(
+		'label' => __( 'Product WhatsApp assistance links', 'daraz-law-shop' ),
+		'section' => 'daraz_contact',
+		'type' => 'checkbox',
+		'description' => __( 'Disable if another plugin already shows WhatsApp product buttons.', 'daraz-law-shop' ),
+	) );
+
+	$wp_customize->add_section( 'daraz_customer_stories', array(
+		'title' => __( 'Verified testimonials', 'daraz-law-shop' ),
+		'priority' => 38,
+		'description' => __( 'Enter only real customer feedback with permission. Empty testimonials are never shown.', 'daraz-law-shop' ),
+	) );
+	$wp_customize->add_setting( 'daraz_testimonials_heading', array(
+		'default' => 'Trusted for the moments that matter.',
+		'sanitize_callback' => 'sanitize_text_field',
+	) );
+	$wp_customize->add_control( 'daraz_testimonials_heading', array(
+		'label' => __( 'Testimonials section heading', 'daraz-law-shop' ),
+		'section' => 'daraz_customer_stories',
+		'type' => 'text',
+	) );
+	for ( $i = 1; $i <= 3; $i++ ) {
+		foreach ( array(
+			'quote' => array( __( 'Verified customer quote', 'daraz-law-shop' ), 'sanitize_textarea_field', 'textarea' ),
+			'name'  => array( __( 'Approved customer attribution', 'daraz-law-shop' ), 'sanitize_text_field', 'text' ),
+		) as $suffix => $field ) {
+			$id = 'daraz_testimonial_' . $i . '_' . $suffix;
+			$wp_customize->add_setting( $id, array( 'default' => '', 'sanitize_callback' => $field[1] ) );
+			$wp_customize->add_control( $id, array(
+				'label' => sprintf( '%s %d — %s', __( 'Testimonial', 'daraz-law-shop' ), $i, $field[0] ),
+				'section' => 'daraz_customer_stories',
+				'type' => $field[2],
+			) );
+		}
+	}
+	/* Public retail locations retained from the existing Daraz contact page. */
+	$wp_customize->add_setting( 'daraz_store_locations', array(
+		'default' => "Kano | Shop 1, Maami Market, inside Nigerian Law School, Bagauda, Kano\nIkot Ekpene | 1 Aba Road, opposite Four Points Hotel, Ikot Ekpene, Akwa Ibom\nAbuja (Jabi) | 4th Floor, Room 5, Shashilga Court, Jabi, Abuja\nAbuja (Bwari) | Jegede Market, opposite Nigerian Law School, Bwari, Abuja\nLagos | Hostel Area, Nigerian Law School, Victoria Island, Lagos\nPort Harcourt | 1 Agip Road, opposite Kilimanjaro, near Nigerian Law School, Port Harcourt\nEnugu (Agbani) | Glass Shop, Ojukwu Market, inside Nigerian Law School, Agbani, Enugu",
+		'sanitize_callback' => 'sanitize_textarea_field',
+	) );
+	$wp_customize->add_control( 'daraz_store_locations', array(
+		'label' => __( 'Store locations (one City | Address per line)', 'daraz-law-shop' ),
+		'description' => __( 'Initial addresses reflect the previous Daraz website. Confirm and edit before launch; delete unavailable locations.', 'daraz-law-shop' ),
+		'section' => 'daraz_contact',
+		'type' => 'textarea',
+	) );
 }
 add_action( 'customize_register', 'daraz_customize_register' );
 

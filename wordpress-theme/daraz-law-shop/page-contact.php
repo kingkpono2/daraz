@@ -15,7 +15,33 @@ $whatsapp = daraz_sanitize_digits( get_theme_mod( 'daraz_whatsapp', '23480339103
 <?php if ( $whatsapp ) : ?><section class="contact-card"><h2><?php esc_html_e( 'WhatsApp', 'daraz-law-shop' ); ?></h2><a href="<?php echo esc_url( 'https://wa.me/' . $whatsapp ); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Start a conversation', 'daraz-law-shop' ); ?> ↗</a></section><?php endif; ?>
 <?php if ( function_exists( 'wc_get_page_permalink' ) ) : ?><section class="contact-card"><h2><?php esc_html_e( 'Your orders', 'daraz-law-shop' ); ?></h2><a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>"><?php esc_html_e( 'View your account', 'daraz-law-shop' ); ?> ↗</a></section><?php endif; ?>
 </div>
-<?php if ( trim( get_the_content() ) ) : ?><div class="entry-content reading-layout"><?php the_content(); ?></div><?php endif; ?>
+
+<?php
+$raw_locations = get_theme_mod( 'daraz_store_locations', "Kano | Shop 1, Maami Market, inside Nigerian Law School, Bagauda, Kano\nIkot Ekpene | 1 Aba Road, opposite Four Points Hotel, Ikot Ekpene, Akwa Ibom\nAbuja (Jabi) | 4th Floor, Room 5, Shashilga Court, Jabi, Abuja\nAbuja (Bwari) | Jegede Market, opposite Nigerian Law School, Bwari, Abuja\nLagos | Hostel Area, Nigerian Law School, Victoria Island, Lagos\nPort Harcourt | 1 Agip Road, opposite Kilimanjaro, near Nigerian Law School, Port Harcourt\nEnugu (Agbani) | Glass Shop, Ojukwu Market, inside Nigerian Law School, Agbani, Enugu" );
+$locations = array();
+foreach ( preg_split( '/\r\n|\r|\n/', (string) $raw_locations ) as $line ) {
+	$parts = array_map( 'trim', explode( '|', $line, 2 ) );
+	if ( count( $parts ) === 2 && $parts[0] && $parts[1] ) {
+		$locations[] = $parts;
+	}
+}
+if ( $locations ) : ?>
+<section class="locations-section" aria-labelledby="locations-heading">
+<div class="section-heading"><div><p class="eyebrow"><?php esc_html_e( 'VISIT US', 'daraz-law-shop' ); ?></p><h2 id="locations-heading"><?php esc_html_e( 'Find Daraz near you.', 'daraz-law-shop' ); ?></h2></div></div>
+<div class="locations-grid">
+<?php foreach ( $locations as $location ) : ?>
+<article class="location-card">
+<span class="eyebrow"><?php esc_html_e( 'STORE LOCATION', 'daraz-law-shop' ); ?></span>
+<h3><?php echo esc_html( $location[0] ); ?></h3>
+<address><?php echo esc_html( $location[1] ); ?></address>
+<a href="<?php echo esc_url( 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode( $location[1] ) ); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Find on Google Maps', 'daraz-law-shop' ); ?> ↗</a>
+</article>
+<?php endforeach; ?>
+</div>
+</section>
+<?php endif; ?>
+
+<?php if ( trim( get_the_content() ) && ! preg_match( '/\[(?:vc_row|vc_column|nectar_|rev_slider|salient_)/i', get_the_content() ) ) : ?><div class="entry-content reading-layout"><?php the_content(); ?></div><?php endif; ?>
 <?php endwhile; ?>
 </main>
 <?php get_footer(); ?>

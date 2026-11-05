@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'DARAZ_THEME_VERSION', '1.1.0' );
+define( 'DARAZ_THEME_VERSION', '1.2.0' );
 
 function daraz_theme_setup() {
 	load_theme_textdomain( 'daraz-law-shop', get_template_directory() . '/languages' );
@@ -64,10 +64,13 @@ add_action( 'widgets_init', 'daraz_register_sidebars' );
 require_once get_template_directory() . '/inc/customizer.php';
 require_once get_template_directory() . '/inc/woocommerce.php';
 require_once get_template_directory() . '/inc/setup-pages.php';
+require_once get_template_directory() . '/inc/seo.php';
+require_once get_template_directory() . '/inc/conversion.php';
 
 /** Print a decorative excerpt from the existing approved editorial artwork. */
 function daraz_editorial_crop( $box, $class = '' ) {
-	$asset = get_theme_file_uri( '/assets/images/editorial-home.png' );
+	$art_path = file_exists( get_theme_file_path( '/assets/images/editorial-home.webp' ) ) ? '/assets/images/editorial-home.webp' : '/assets/images/editorial-home.png';
+	$asset = get_theme_file_uri( $art_path );
 	printf(
 		'<svg class="editorial-crop %1$s" viewBox="%2$s" preserveAspectRatio="xMidYMid slice" role="img" aria-label="%3$s"><image href="%4$s" width="1024" height="1536" /></svg>',
 		esc_attr( $class ),

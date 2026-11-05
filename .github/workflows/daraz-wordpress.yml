@@ -17,6 +17,8 @@ jobs:
           php-version: '8.2'
       - name: Lint all WordPress PHP templates
         run: find wordpress-theme/daraz-law-shop -name '*.php' -type f -print0 | xargs -0 -n1 php -l
+      - name: Adversarial integration smoke checks
+        run: python3 tools/qa_theme.py
       - name: Check theme JavaScript
         run: node --check wordpress-theme/daraz-law-shop/assets/js/theme.js
       - name: Validate required theme files

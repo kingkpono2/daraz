@@ -7,6 +7,26 @@
 get_header();
 $shop_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/' );
 $hero_url = get_theme_mod( 'daraz_hero_image', '' );
+/* Prefer the existing shop's actual product imagery to prototype art. */
+if ( ! $hero_url && class_exists( 'WooCommerce' ) ) {
+	$featured_images = wc_get_products( array(
+		'status' => 'publish', 'featured' => true, 'limit' => 8, 'orderby' => 'date', 'order' => 'DESC',
+		'return' => 'ids',
+	) );
+	if ( ! $featured_images ) {
+		$featured_images = wc_get_products( array(
+			'status' => 'publish', 'limit' => 8, 'orderby' => 'date', 'order' => 'DESC',
+			'return' => 'ids',
+		) );
+	}
+	foreach ( $featured_images as $candidate ) {
+		$attachment = get_post_thumbnail_id( $candidate );
+		if ( $attachment ) {
+			$hero_url = wp_get_attachment_image_url( $attachment, 'full' );
+			break;
+		}
+	}
+}
 ?>
 <main id="primary" class="site-main">
 <section class="home-hero" aria-labelledby="hero-title">
@@ -15,7 +35,7 @@ $hero_url = get_theme_mod( 'daraz_hero_image', '' );
 <p class="eyebrow hero-eyebrow"><?php echo esc_html( get_theme_mod( 'daraz_hero_kicker', 'LEGALWEAR FOR A HIGHER STANDARD' ) ); ?></p>
 <h1 id="hero-title"><?php echo esc_html( get_theme_mod( 'daraz_hero_title', 'Distinction in every detail.' ) ); ?></h1>
 <p class="hero-lede"><?php echo esc_html( get_theme_mod( 'daraz_hero_text', 'Professional legalwear. Impeccable craftsmanship. For those who uphold more.' ) ); ?></p>
-<a class="button button-dark" href="<?php echo esc_url( $shop_url ); ?>"><?php esc_html_e( 'Shop the collection', 'daraz-law-shop' ); ?><span aria-hidden="true">↗</span></a>
+<div class="hero-cta-row"><a class="button button-dark" href="<?php echo esc_url( $shop_url ); ?>"><?php esc_html_e( 'Shop the collection', 'daraz-law-shop' ); ?><span aria-hidden="true">↗</span></a><a class="hero-help-cta" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Need guidance?', 'daraz-law-shop' ); ?> ↗</a></div>
 <div class="hero-micro"><span>01 — <?php esc_html_e( 'THE COLLECTION', 'daraz-law-shop' ); ?></span><span><?php esc_html_e( 'CRAFTED FOR DISTINCTION', 'daraz-law-shop' ); ?></span></div>
 </div>
 </div>
@@ -40,7 +60,7 @@ if ( $hero_attachment ) {
 <?php else : ?>
 <?php daraz_editorial_crop( '470 59 554 430', 'hero-editorial-image' ); ?>
 <?php endif; ?>
-<div class="hero-caption"><span><?php esc_html_e( 'THE ART OF APPEARING WELL', 'daraz-law-shop' ); ?></span><span>EST. DARAZ</span></div>
+<div class="hero-caption"><span><?php esc_html_e( 'ESSENTIALS FOR THE PROFESSION', 'daraz-law-shop' ); ?></span><span>DARAZ LAW SHOP</span></div>
 </div>
 </section>
 
@@ -73,12 +93,28 @@ if ( taxonomy_exists( 'product_cat' ) ) :
 	?>
 <a class="category-tile" href="<?php echo esc_url( $link ); ?>">
 <div class="category-image">
-<?php if ( $thumbnail ) :
-	echo wp_get_attachment_image( $thumbnail, 'medium_large', false, array( 'loading' => 'lazy', 'alt' => $category->name ) );
-else :
-	$boxes = array( '43 507 230 182', '290 507 214 182', '520 507 216 182', '752 507 229 182' );
-	daraz_editorial_crop( $boxes[ $index % 4 ], 'category-editorial' );
-endif; ?>
+<?php
+if ( ! $thumbnail ) {
+	$sample_images = get_posts( array(
+		'post_type' => 'product', 'post_status' => 'publish', 'posts_per_page' => 1,
+		'fields' => 'ids', 'no_found_rows' => true,
+		'tax_query' => array( array( 'taxonomy' => 'product_cat', 'field' => 'term_id', 'terms' => (int) $category->term_id ) ),
+		'meta_query' => array( array( 'key' => '_thumbnail_id', 'compare' => 'EXISTS' ) ),
+	) );
+	if ( $sample_images ) {
+		$thumbnail = (int) get_post_thumbnail_id( $sample_images[0] );
+	}
+}
+if ( $thumbnail ) {
+	echo wp_get_attachment_image( $thumbnail, 'medium_large', false, array(
+		'loading' => 'lazy',
+		'alt' => $category->name . ' — ' . __( 'browse collection', 'daraz-law-shop' ),
+		'sizes' => '(max-width: 980px) 50vw, 25vw',
+	) );
+} else {
+	echo '<div class="category-no-photo" aria-hidden="true"><span>DARAZ</span><small>LAW SHOP</small></div>';
+}
+?>
 </div>
 <div class="category-meta"><span><?php echo esc_html( sprintf( '%02d', $index + 1 ) ); ?></span><h3><?php echo esc_html( $category->name ); ?></h3><span aria-hidden="true">↗</span></div>
 </a>
@@ -121,7 +157,7 @@ else : ?>
 <div class="search-intent-copy">
 <p class="eyebrow"><?php esc_html_e( 'THE PRACTICE / THE DETAILS', 'daraz-law-shop' ); ?></p>
 <h2 id="legalwear-guide-heading"><?php esc_html_e( 'Legalwear for the Nigerian bar.', 'daraz-law-shop' ); ?></h2>
-<p><?php esc_html_e( 'Explore essential court attire for legal professionals in Nigeria, including barrister wigs, barrister gowns, court bands and complementary accessories. Each product page provides available options, prices and details to help you choose what suits your practice.', 'daraz-law-shop' ); ?></p>
+<p><?php esc_html_e( 'Explore essential legalwear and professional resources in Nigeria, from barrister wigs and gowns to court bands, legal books and courtroom accessories. Each product page provides available options, prices and details to help you choose what suits your practice.', 'daraz-law-shop' ); ?></p>
 <a class="text-link" href="<?php echo esc_url( $shop_url ); ?>"><?php esc_html_e( 'Browse professional legalwear', 'daraz-law-shop' ); ?> ↗</a>
 </div>
 <div class="search-intent-aside">
@@ -141,8 +177,27 @@ $faq_page = get_page_by_path( 'faq', OBJECT, 'page' );
 <div class="story-visual"><?php daraz_editorial_crop( '437 1073 415 268', 'story-editorial-image' ); ?></div>
 </section>
 
+<?php
+$daraz_testimonials = array();
+for ( $i = 1; $i <= 3; $i++ ) {
+	$quote = trim( (string) get_theme_mod( 'daraz_testimonial_' . $i . '_quote', '' ) );
+	$name = trim( (string) get_theme_mod( 'daraz_testimonial_' . $i . '_name', '' ) );
+	if ( $quote && $name ) {
+		$daraz_testimonials[] = array( 'quote' => $quote, 'name' => $name );
+	}
+}
+if ( $daraz_testimonials ) : ?>
+<section class="customer-voices" aria-labelledby="customer-voices-heading">
+<div class="container">
+<div class="section-heading"><div><p class="eyebrow"><?php esc_html_e( 'REAL CUSTOMER STORIES', 'daraz-law-shop' ); ?></p><h2 id="customer-voices-heading"><?php echo esc_html( get_theme_mod( 'daraz_testimonials_heading', 'Trusted for the moments that matter.' ) ); ?></h2></div></div>
+<div class="voice-grid"><?php foreach ( $daraz_testimonials as $testimonial ) : ?>
+<figure class="voice-card"><blockquote>“<?php echo esc_html( $testimonial['quote'] ); ?>”</blockquote><figcaption><?php echo esc_html( $testimonial['name'] ); ?></figcaption></figure>
+<?php endforeach; ?></div>
+</div></section>
+<?php endif; ?>
+
 <?php if ( have_posts() ) : while ( have_posts() ) : the_post();
-	if ( trim( get_the_content() ) ) : ?>
+	if ( trim( get_the_content() ) && ! preg_match( '/\[(?:vc_row|vc_column|nectar_|rev_slider|salient_)/i', get_the_content() ) ) : ?>
 <section class="container home-page-content entry-content"><?php the_content(); ?></section>
 <?php endif; endwhile; endif; ?>
 </main>

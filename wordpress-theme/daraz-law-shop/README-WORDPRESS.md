@@ -62,3 +62,21 @@ The theme includes \`inc/seo.php\` (fallback behavior only when no dedicated SEO
 The \`front-page.php\` includes additional relevant, non-deceptive legalwear information and links to helpful, published information pages. The hero attachment now uses WordPress-generated image sizes and \`srcset\` with a high-priority LCP image; use optimized WebP/AVIF uploads for best load time. Replace the large reference editorial PNGs with licensed, approved and compressed source imagery before launch.
 
 **Important:** SEO metadata, schema and theme performance are technical foundations, **not a promise of first-page rankings, a 95+ SEO score, or the number-one result**. Actual rankings also depend on search intent, competitive landscape, content originality, speed, trustworthy business signals, inbound links and Google indexing.
+
+
+## Adversarial UI and conversion review — 2026-11-05
+
+The existing live site at \`www.darazlawshop.com\` is already a WooCommerce shop (around 14 visible products when reviewed), with categories including **Books** and **DARAZ**, a testimonials section and prominent **Buy via WhatsApp** purchase links. The new theme is a redesigned editorial storefront, **not a pixel-identical reproduction**. Its activation must preserve the existing product/database/order content without resetting data.
+
+The 1.2 conversion changes specifically address discovered gaps:
+- Visible mobile product search, minimum 44px tap targets for core header buttons, and one-column product cards on small phones.
+- Native WooCommerce category and price filters (including filter-clearing from empty-result states), native sorting, pagination and variation handling.
+- Real-product WhatsApp guidance links on product cards and details; standard WooCommerce cart and secure checkout stay primary. Disable the theme links in Customizer if a WhatsApp shopping plugin is already installed.
+- Real product photography from existing WooCommerce featured images/categories whenever available, not unrelated prototype product images.
+- Public store locations from the previous contact page in a customizable location list and helpful maps, plus relevant footer support and policy links.
+- Up to three verified, explicitly configured testimonials; no invented five-star ratings or fabricated customer statements. Existing live testimonials can be entered after verification.
+- Responsive hero \`srcset\`, WebP artwork in the packaged ZIP, smaller default upload; no extra design dependencies.
+
+**Migration cautions / launch blockers:** The live site uses builder-managed homepage/contact content. Test on a clone first, and remove/replace obsolete page-builder shortcodes before publishing. The template suppresses known raw obsolete homepage/contact builder markup, but third-party block/shortcode behavior depends on active plugins. Existing product titles such as **DUTCH**, **BRUTT**, **SAPPHIRE** do not explain the product; enrich each with a descriptive subtitle, real specifications and approved photos in WooCommerce. Category labels including **DARAZ** and **Uncategorized** should be replaced by descriptive collections within WordPress, with careful permanent URL redirects if slugs change. Preserve existing real reviews, orders, page slugs and products; never overwrite newer live files or database records with GitHub copies.
+
+**Quality standard, not a certification:** A-grade launch requires real WordPress staging QA, order/payment (sandbox) and responsive browser checks, accessibility testing and actual Core Web Vitals. Automated PHP lint and package validation are necessary but do not validate a live checkout, payment gateway, Google rankings or conversion uplift. Do not deploy the theme directly onto the existing store without a database/file backup and a verified staging migration.

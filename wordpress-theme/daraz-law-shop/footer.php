@@ -48,13 +48,27 @@ foreach ( $help_links as $slug => $label ) :
 <?php if ( $email ) : ?><a href="mailto:<?php echo esc_attr( sanitize_email( $email ) ); ?>"><?php echo esc_html( $email ); ?></a><?php endif; ?>
 <?php if ( $phone ) : ?><a href="tel:<?php echo esc_attr( preg_replace( '/[^+0-9]/', '', $phone ) ); ?>"><?php echo esc_html( $phone ); ?></a><?php endif; ?>
 <div class="footer-social">
-<?php foreach ( array( 'instagram' => 'Instagram', 'facebook' => 'Facebook' ) as $field => $label ) :
+<?php foreach ( array( 'instagram' => 'Instagram', 'facebook' => 'Facebook', 'x' => 'X' ) as $field => $label ) :
 	$url = get_theme_mod( 'daraz_' . $field, '' );
 	if ( $url ) : ?><a href="<?php echo esc_url( $url ); ?>" target="_blank" rel="noopener noreferrer"><?php echo esc_html( $label ); ?> ↗</a><?php endif; ?>
 <?php endforeach; ?>
 </div></div>
 </div>
-<div class="container footer-bottom"><span>© <?php echo esc_html( date_i18n( 'Y' ) ); ?> <?php bloginfo( 'name' ); ?>.</span><span><?php esc_html_e( 'Made for the profession. Built to last.', 'daraz-law-shop' ); ?></span></div>
+<div class="container footer-bottom">
+<span>© <?php echo esc_html( date_i18n( 'Y' ) ); ?> <?php bloginfo( 'name' ); ?>.</span>
+<nav class="footer-legal-nav" aria-label="<?php esc_attr_e( 'Help and policies', 'daraz-law-shop' ); ?>">
+<?php foreach ( array(
+	'faq' => __( 'FAQs', 'daraz-law-shop' ),
+	'delivery-returns' => __( 'Delivery & returns', 'daraz-law-shop' ),
+	'privacy-policy' => __( 'Privacy', 'daraz-law-shop' ),
+	'terms-and-conditions' => __( 'Terms', 'daraz-law-shop' ),
+) as $slug => $label ) :
+	$page = get_page_by_path( $slug, OBJECT, 'page' );
+	if ( $page instanceof WP_Post && 'publish' === $page->post_status ) : ?>
+<a href="<?php echo esc_url( get_permalink( $page ) ); ?>"><?php echo esc_html( $label ); ?></a>
+<?php endif; endforeach; ?>
+</nav>
+</div>
 </footer>
 <?php if ( $wa ) : ?>
 <a class="wa-pill" href="<?php echo esc_url( 'https://wa.me/' . $wa ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php esc_attr_e( 'Chat via WhatsApp', 'daraz-law-shop' ); ?>"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20.5 11.6a8.5 8.5 0 0 1-12.7 7.3L3 20.3l1.4-4.6A8.5 8.5 0 1 1 20.5 11.6Z"/><path d="M8 7.5c-.8.4-1 1.3-.5 2.7 1 2.6 3.3 4.8 5.9 5.4 1.4.4 2.4-.3 2.6-1.5l-2.7-1.3-1 1c-1.8-.8-2.7-1.8-3.2-3.1l.8-1L8.8 7.5Z"/></svg><span><?php esc_html_e( 'Need help?', 'daraz-law-shop' ); ?></span></a>

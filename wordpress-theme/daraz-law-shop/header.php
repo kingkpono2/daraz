@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <?php wp_body_open(); ?>
 <a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e( 'Skip to content', 'daraz-law-shop' ); ?></a>
 <div id="page" class="site">
-<div class="announcement"><div class="container announcement-inner"><span><?php esc_html_e( 'PROFESSIONAL LEGALWEAR • MADE FOR THE MOMENTS THAT MATTER', 'daraz-law-shop' ); ?></span><a href="<?php echo esc_url( get_theme_mod( 'daraz_phone', '+2348033910334' ) ? 'tel:' . preg_replace( '/[^+0-9]/', '', get_theme_mod( 'daraz_phone', '+2348033910334' ) ) : home_url( '/' ) ); ?>"><?php esc_html_e( 'Talk to an expert', 'daraz-law-shop' ); ?> <span aria-hidden="true">↗</span></a></div></div>
+<div class="announcement"><div class="container announcement-inner"><span><?php echo esc_html( get_theme_mod( 'daraz_announcement_message', 'Professional legalwear for the Nigerian bar' ) ); ?></span><a href="<?php echo esc_url( get_theme_mod( 'daraz_phone', '+2348033910334' ) ? 'tel:' . preg_replace( '/[^+0-9]/', '', get_theme_mod( 'daraz_phone', '+2348033910334' ) ) : home_url( '/' ) ); ?>"><?php esc_html_e( 'Talk to an expert', 'daraz-law-shop' ); ?> <span aria-hidden="true">↗</span></a></div></div>
 <header id="masthead" class="site-header">
 <div class="container header-inner">
 <div class="site-branding"><?php daraz_brand(); ?></div>
@@ -35,12 +35,18 @@ else : ?>
 <label class="screen-reader-text" for="header-search"><?php esc_html_e( 'Search products', 'daraz-law-shop' ); ?></label>
 <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>
 <input id="header-search" type="search" name="s" value="<?php echo esc_attr( get_search_query() ); ?>" placeholder="<?php esc_attr_e( 'Search legalwear', 'daraz-law-shop' ); ?>">
-<input type="hidden" name="post_type" value="product">
+<?php if ( class_exists( 'WooCommerce' ) ) : ?><input type="hidden" name="post_type" value="product"><?php endif; ?>
 </form>
 <?php if ( function_exists( 'wc_get_page_permalink' ) ) : ?>
 <a class="account-link" href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" aria-label="<?php esc_attr_e( 'My account', 'daraz-law-shop' ); ?>"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 22c0-5 3-7 8-7s8 2 8 7"/></svg></a>
 <?php endif; ?>
 <?php daraz_cart_button(); ?>
 </div>
+<form role="search" method="get" class="mobile-product-search" action="<?php echo esc_url( home_url( '/' ) ); ?>">
+<label class="screen-reader-text" for="mobile-product-query"><?php esc_html_e( 'Search Daraz products', 'daraz-law-shop' ); ?></label>
+<input id="mobile-product-query" type="search" name="s" placeholder="<?php esc_attr_e( 'Search the collection…', 'daraz-law-shop' ); ?>" value="<?php echo esc_attr( get_search_query() ); ?>">
+<?php if ( class_exists( 'WooCommerce' ) ) : ?><input type="hidden" name="post_type" value="product"><?php endif; ?>
+<button type="submit" aria-label="<?php esc_attr_e( 'Search', 'daraz-law-shop' ); ?>">↗</button>
+</form>
 </div>
 </header>

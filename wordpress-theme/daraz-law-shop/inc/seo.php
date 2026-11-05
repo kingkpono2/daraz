@@ -32,7 +32,7 @@ function daraz_seo_customizer( $customizer ) {
 		'description' => __( 'Used only when a dedicated SEO plugin is not managing the site. Titles and descriptions should match the real products and page content.', 'daraz-law-shop' ),
 	) );
 	$customizer->add_setting( 'daraz_seo_home_title', array(
-		'default'           => 'Barrister Gowns, Wigs & Legalwear in Nigeria | Daraz Law Shop',
+		'default'           => 'Barrister Gowns, Wigs, Legalwear & Law Books | Daraz Law Shop',
 		'sanitize_callback' => 'sanitize_text_field',
 	) );
 	$customizer->add_control( 'daraz_seo_home_title', array(
@@ -41,7 +41,7 @@ function daraz_seo_customizer( $customizer ) {
 		'type'    => 'text',
 	) );
 	$customizer->add_setting( 'daraz_seo_home_description', array(
-		'default'           => 'Explore barrister wigs, gowns, court bands and professional legalwear at Daraz Law Shop. Browse court attire, sizes and accessories in Nigeria.',
+		'default'           => 'Shop barrister gowns, wigs, court bands, law books and legal accessories at Daraz Law Shop Nigeria. Explore available products and get expert sizing help.',
 		'sanitize_callback' => 'sanitize_textarea_field',
 	) );
 	$customizer->add_control( 'daraz_seo_home_description', array(
@@ -68,7 +68,7 @@ function daraz_seo_summary( $value, $limit = 160 ) {
 
 function daraz_seo_description() {
 	if ( is_front_page() ) {
-		return daraz_seo_summary( get_theme_mod( 'daraz_seo_home_description', 'Explore barrister wigs, gowns, court bands and professional legalwear at Daraz Law Shop. Browse court attire, sizes and accessories in Nigeria.' ) );
+		return daraz_seo_summary( get_theme_mod( 'daraz_seo_home_description', 'Shop barrister gowns, wigs, court bands, law books and legal accessories at Daraz Law Shop Nigeria. Explore available products and get expert sizing help.' ) );
 	}
 	if ( is_singular( 'product' ) && function_exists( 'wc_get_product' ) ) {
 		$product = wc_get_product( get_queried_object_id() );
@@ -155,7 +155,7 @@ function daraz_seo_url() {
 /** Homepage title uses WordPress's title-tag support, not a second <title>. */
 function daraz_seo_home_document_title( $title ) {
 	if ( ! daraz_seo_plugin_active() && is_front_page() && ! is_paged() && ! $title ) {
-		return sanitize_text_field( get_theme_mod( 'daraz_seo_home_title', 'Barrister Gowns, Wigs & Legalwear in Nigeria | Daraz Law Shop' ) );
+		return sanitize_text_field( get_theme_mod( 'daraz_seo_home_title', 'Barrister Gowns, Wigs, Legalwear & Law Books | Daraz Law Shop' ) );
 	}
 	return $title;
 }
@@ -213,7 +213,8 @@ function daraz_seo_image() {
 	if ( $default ) {
 		return esc_url_raw( $default );
 	}
-	return get_theme_file_uri( '/assets/images/editorial-home.png' );
+	$image_path = file_exists( get_theme_file_path( '/assets/images/editorial-home.webp' ) ) ? '/assets/images/editorial-home.webp' : '/assets/images/editorial-home.png';
+	return get_theme_file_uri( $image_path );
 }
 
 function daraz_seo_meta() {
