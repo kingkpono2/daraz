@@ -1,0 +1,36 @@
+name: Daraz WordPress theme - lint and ZIP
+on:
+  push:
+    paths:
+      - 'wordpress-theme/**'
+      - '.github/workflows/daraz-wordpress.yml'
+  workflow_dispatch:
+jobs:
+  lint-package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+      - name: Lint all WordPress PHP templates
+        run: find wordpress-theme/daraz-law-shop -name '*.php' -type f -print0 | xargs -0 -n1 php -l
+      - name: Check theme JavaScript
+        run: node --check wordpress-theme/daraz-law-shop/assets/js/theme.js
+      - name: Validate required theme files
+        run: |
+          test -f wordpress-theme/daraz-law-shop/style.css
+          test -f wordpress-theme/daraz-law-shop/index.php
+          test -f wordpress-theme/daraz-law-shop/functions.php
+          test -f wordpress-theme/daraz-law-shop/404.php
+          test -f wordpress-theme/daraz-law-shop/front-page.php
+      - name: Create installable WordPress theme ZIP
+        run: cd wordpress-theme && zip -qr ../daraz-law-shop.zip daraz-law-shop
+      - name: Upload installable theme ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: daraz-law-shop-theme-zip
+          path: daraz-law-shop.zip
+          retention-days: 30

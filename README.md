@@ -1,3 +1,9 @@
+# WordPress theme conversion
+
+A native, production-oriented **Daraz Law Shop WordPress + WooCommerce theme** is now included at [`wordpress-theme/daraz-law-shop/`](wordpress-theme/daraz-law-shop/). The original Node.js storefront below is preserved unchanged. See [WordPress theme setup](wordpress-theme/daraz-law-shop/README-WORDPRESS.md) for installation, all page templates, live WooCommerce setup, and packaging instructions.
+
+---
+
 # Daraz Law Shop proof of concept
 
 Responsive HTML/CSS/JavaScript storefront using hardcoded products and original design concepts. Includes home, catalogue, cart, checkout and confirmation; category/size/price filters; persistent cart; product size selection; cart drawer; fly-to-cart animation; demo success/failure payment flows and receipt download.

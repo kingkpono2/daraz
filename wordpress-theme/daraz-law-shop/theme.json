@@ -1,0 +1,78 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 2,
+  "settings": {
+    "appearanceTools": true,
+    "layout": {
+      "contentSize": "880px",
+      "wideSize": "1360px"
+    },
+    "color": {
+      "palette": [
+        {
+          "slug": "ink",
+          "name": "Ink",
+          "color": "#181b17"
+        },
+        {
+          "slug": "paper",
+          "name": "Paper",
+          "color": "#f9f8f5"
+        },
+        {
+          "slug": "gold",
+          "name": "Antique Gold",
+          "color": "#897246"
+        },
+        {
+          "slug": "green",
+          "name": "Forest Green",
+          "color": "#245a3e"
+        },
+        {
+          "slug": "white",
+          "name": "White",
+          "color": "#ffffff"
+        }
+      ]
+    },
+    "typography": {
+      "fontFamilies": [
+        {
+          "slug": "serif",
+          "name": "Editorial Serif",
+          "fontFamily": "Baskerville, Georgia, serif"
+        },
+        {
+          "slug": "sans",
+          "name": "Modern Sans",
+          "fontFamily": "Avenir Next, Segoe UI, Arial, sans-serif"
+        }
+      ],
+      "fluid": true
+    }
+  },
+  "styles": {
+    "color": {
+      "background": "#f9f8f5",
+      "text": "#181b17"
+    },
+    "typography": {
+      "fontFamily": "var(--wp--preset--font-family--sans)",
+      "lineHeight": "1.65"
+    },
+    "elements": {
+      "heading": {
+        "typography": {
+          "fontFamily": "var(--wp--preset--font-family--serif)",
+          "fontWeight": "500"
+        }
+      },
+      "link": {
+        "color": {
+          "text": "#181b17"
+        }
+      }
+    }
+  }
+}
