@@ -213,6 +213,10 @@ function daraz_seo_image() {
 	if ( $default ) {
 		return esc_url_raw( $default );
 	}
+	$photo = '/assets/images/hero/hero-legalwear.webp';
+	if ( is_front_page() && file_exists( get_theme_file_path( $photo ) ) ) {
+		return get_theme_file_uri( $photo );
+	}
 	$image_path = file_exists( get_theme_file_path( '/assets/images/editorial-home.webp' ) ) ? '/assets/images/editorial-home.webp' : '/assets/images/editorial-home.png';
 	return get_theme_file_uri( $image_path );
 }

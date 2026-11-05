@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'DARAZ_THEME_VERSION', '1.2.0' );
+define( 'DARAZ_THEME_VERSION', '1.3.0' );
 
 function daraz_theme_setup() {
 	load_theme_textdomain( 'daraz-law-shop', get_template_directory() . '/languages' );

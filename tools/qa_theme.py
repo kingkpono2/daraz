@@ -31,9 +31,19 @@ assert_contains("header.php", [
     'class="nav-toggle"', 'aria-expanded="false"', 'id="site-navigation"',
     'class="mobile-product-search"', 'name="s"',
 ])
+for filename in (
+    "hero-legalwear.webp", "hero-legalwear-mobile.webp",
+    "hero-professional.webp", "hero-professional-mobile.webp",
+    "hero-community.webp", "hero-community-mobile.webp",
+):
+    if not (THEME / "assets/images/hero" / filename).is_file():
+        raise AssertionError(f"Missing authentic hero photo {filename}")
+
 assert_contains("front-page.php", [
-    "wc_get_products", "get_terms(", "new WP_Query", "woocommerce_product_loop_start",
+    "get_terms(", "new WP_Query", "woocommerce_product_loop_start",
     "get_theme_mod( 'daraz_testimonials_heading'",
+    "data-daraz-slider", "/assets/images/hero/", "hero-legalwear", "hero-community",
+    "data-slide-prev", "data-slide-next", "aria-roledescription",
 ])
 assert_contains("inc/woocommerce.php", [
     "woocommerce_add_to_cart_fragments", "wc_get_cart_url",
@@ -49,7 +59,7 @@ assert_contains("inc/seo.php", [
     "daraz_seo_robots", "daraz_seo_breadcrumbs",
 ])
 assert_contains("style.css", [
-    "Version: 1.2.0", ".mobile-product-search", ".daraz-archive-filters",
+    "Version: 1.3.0", ".hero-gallery-slide", ".hero-gallery-controls", ".mobile-product-search", ".daraz-archive-filters",
     ".woocommerce", ".voice-grid", ".locations-grid",
 ])
 assert_contains("page-contact.php", ["daraz_store_locations", "google.com/maps/search/"])
@@ -57,7 +67,10 @@ assert_contains("inc/customizer.php", [
     "daraz_whatsapp_products", "daraz_store_locations",
     "daraz_customer_stories", "sanitize_textarea_field",
 ])
-assert_contains("assets/js/theme.js", ["aria-expanded", "Escape", "matchMedia"])
+assert_contains("assets/js/theme.js", [
+    "aria-expanded", "Escape", "matchMedia",
+    "data-daraz-slider", "prefers-reduced-motion", "touchstart", "visibilitychange",
+])
 
 # There is no separate checkout/payment simulator in the shipped theme.
 for php in THEME.rglob("*.php"):

@@ -40,6 +40,38 @@ function daraz_customize_register( $wp_customize ) {
 		'section' => 'daraz_homepage',
 	) ) );
 
+
+	/* Three editable photographs; the split-screen hero layout does not change. */
+	$wp_customize->add_section( 'daraz_slider', array(
+		'title' => __( 'Homepage photo slider', 'daraz-law-shop' ),
+		'priority' => 34,
+		'description' => __( 'Three source-authentic photographs from the existing Daraz Law Shop website are included in the theme. Upload replacements here without editing PHP. Portrait-friendly crops work best in the narrow photo pane.', 'daraz-law-shop' ),
+	) );
+	$captions = array(
+		1 => __( 'Legalwear with distinction', 'daraz-law-shop' ),
+		2 => __( 'Crafted for the profession', 'daraz-law-shop' ),
+		3 => __( 'Meet the Daraz community', 'daraz-law-shop' ),
+	);
+	for ( $slide = 1; $slide <= 3; $slide++ ) {
+		$photo_option = 'daraz_slide_' . $slide . '_image';
+		$caption_option = 'daraz_slide_' . $slide . '_caption';
+		$wp_customize->add_setting( $photo_option, array( 'default' => '', 'sanitize_callback' => 'esc_url_raw' ) );
+		$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, $photo_option, array(
+			'label' => sprintf( __( 'Slide %d photograph', 'daraz-law-shop' ), $slide ),
+			'section' => 'daraz_slider',
+			'description' => __( 'Leave blank to use the real photograph bundled from darazlawshop.com.', 'daraz-law-shop' ),
+		) ) );
+		$wp_customize->add_setting( $caption_option, array(
+			'default' => $captions[ $slide ],
+			'sanitize_callback' => 'sanitize_text_field',
+		) );
+		$wp_customize->add_control( $caption_option, array(
+			'label' => sprintf( __( 'Slide %d photo caption', 'daraz-law-shop' ), $slide ),
+			'section' => 'daraz_slider',
+			'type' => 'text',
+		) );
+	}
+
 	$wp_customize->add_section( 'daraz_contact', array(
 		'title' => __( 'Daraz contact details', 'daraz-law-shop' ),
 		'priority' => 36,

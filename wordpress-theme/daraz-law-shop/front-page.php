@@ -6,27 +6,31 @@
  */
 get_header();
 $shop_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/' );
-$hero_url = get_theme_mod( 'daraz_hero_image', '' );
-/* Prefer the existing shop's actual product imagery to prototype art. */
-if ( ! $hero_url && class_exists( 'WooCommerce' ) ) {
-	$featured_images = wc_get_products( array(
-		'status' => 'publish', 'featured' => true, 'limit' => 8, 'orderby' => 'date', 'order' => 'DESC',
-		'return' => 'ids',
-	) );
-	if ( ! $featured_images ) {
-		$featured_images = wc_get_products( array(
-			'status' => 'publish', 'limit' => 8, 'orderby' => 'date', 'order' => 'DESC',
-			'return' => 'ids',
-		) );
-	}
-	foreach ( $featured_images as $candidate ) {
-		$attachment = get_post_thumbnail_id( $candidate );
-		if ( $attachment ) {
-			$hero_url = wp_get_attachment_image_url( $attachment, 'full' );
-			break;
-		}
-	}
-}
+/*
+ * Curated, genuine photographs from darazlawshop.com. The same hero split
+ * remains 46% typography / 54% image. Build script creates optimized,
+ * subject-aware desktop/mobile crops; uploaded WP images can override each.
+ */
+$slide_images = array(
+	array(
+		'asset' => 'hero-legalwear',
+		'alt' => __( 'Three Daraz Law Shop legal professionals in court gowns and bands with barrister wigs', 'daraz-law-shop' ),
+		'caption' => __( 'Legalwear with distinction', 'daraz-law-shop' ),
+		'source' => 'https://www.darazlawshop.com/wp-content/uploads/2024/01/406201635_936988071199897_5211724824284611170_n.jpg',
+	),
+	array(
+		'asset' => 'hero-professional',
+		'alt' => __( 'Legal professional in a Daraz gown with court bands and a barrister wig', 'daraz-law-shop' ),
+		'caption' => __( 'Crafted for the profession', 'daraz-law-shop' ),
+		'source' => 'https://www.darazlawshop.com/wp-content/uploads/2024/01/405773936_934089611489743_1822998598057115461_n.jpg',
+	),
+	array(
+		'asset' => 'hero-community',
+		'alt' => __( 'Two legal professionals holding Daraz Law Shop branded shopping bags', 'daraz-law-shop' ),
+		'caption' => __( 'Meet the Daraz community', 'daraz-law-shop' ),
+		'source' => 'https://www.darazlawshop.com/wp-content/uploads/2024/01/294799034_5696098660402172_2739760369760199759_n-1.jpg',
+	),
+);
 ?>
 <main id="primary" class="site-main">
 <section class="home-hero" aria-labelledby="hero-title">
@@ -39,28 +43,59 @@ if ( ! $hero_url && class_exists( 'WooCommerce' ) ) {
 <div class="hero-micro"><span>01 — <?php esc_html_e( 'THE COLLECTION', 'daraz-law-shop' ); ?></span><span><?php esc_html_e( 'CRAFTED FOR DISTINCTION', 'daraz-law-shop' ); ?></span></div>
 </div>
 </div>
-<div class="hero-visual">
-<?php if ( $hero_url ) : ?>
-<?php
-$hero_attachment = attachment_url_to_postid( $hero_url );
-if ( $hero_attachment ) {
-	// Generate responsive srcset and prioritize the image that paints first.
-	echo wp_get_attachment_image( $hero_attachment, 'daraz_hero', false, array(
-		'class'         => 'hero-uploaded-image',
-		'alt'           => __( 'Daraz Law Shop professional legalwear collection', 'daraz-law-shop' ),
-		'fetchpriority' => 'high',
-		'loading'       => 'eager',
-		'decoding'      => 'async',
-		'sizes'         => '(max-width: 700px) 100vw, 54vw',
-	) );
-} else {
-	printf( '<img class="hero-uploaded-image" src="%1$s" alt="%2$s" fetchpriority="high" decoding="async" width="1600" height="1200">', esc_url( $hero_url ), esc_attr__( 'Daraz Law Shop professional legalwear collection', 'daraz-law-shop' ) );
-}
-?>
-<?php else : ?>
-<?php daraz_editorial_crop( '470 59 554 430', 'hero-editorial-image' ); ?>
+<div class="hero-visual hero-gallery" data-daraz-slider data-interval="6800" role="region" aria-roledescription="<?php esc_attr_e( 'carousel', 'daraz-law-shop' ); ?>" aria-label="<?php esc_attr_e( 'Daraz Law Shop real customer and product photography', 'daraz-law-shop' ); ?>">
+<div class="hero-gallery-track">
+<?php foreach ( $slide_images as $index => $slide ) :
+	$number = $index + 1;
+	$slide['caption'] = get_theme_mod( 'daraz_slide_' . $number . '_caption', $slide['caption'] );
+	$desktop_file = '/assets/images/hero/' . $slide['asset'] . '.webp';
+	$mobile_file  = '/assets/images/hero/' . $slide['asset'] . '-mobile.webp';
+	$desktop_url = file_exists( get_theme_file_path( $desktop_file ) ) ? get_theme_file_uri( $desktop_file ) : $slide['source'];
+	$mobile_url = file_exists( get_theme_file_path( $mobile_file ) ) ? get_theme_file_uri( $mobile_file ) : '';
+	$custom_url = get_theme_mod( 'daraz_slide_' . $number . '_image', '' );
+	if ( 1 === $number && ! $custom_url ) {
+		$custom_url = get_theme_mod( 'daraz_hero_image', '' );
+	}
+	$asset = $custom_url ? $custom_url : $desktop_url;
+	$is_initial = 0 === $index;
+	?>
+<div class="hero-gallery-slide<?php echo $is_initial ? ' is-active' : ''; ?>" role="group" aria-roledescription="<?php esc_attr_e( 'slide', 'daraz-law-shop' ); ?>" aria-label="<?php echo esc_attr( sprintf( __( '%1$d of %2$d', 'daraz-law-shop' ), $number, count( $slide_images ) ) ); ?>" aria-hidden="<?php echo $is_initial ? 'false' : 'true'; ?>" data-slide-caption="<?php echo esc_attr( $slide['caption'] ); ?>">
+<?php if ( $custom_url ) :
+	$attachment_id = attachment_url_to_postid( $custom_url );
+	if ( $attachment_id ) {
+		echo wp_get_attachment_image( $attachment_id, 'daraz_hero', false, array(
+			'class' => 'hero-gallery-photo',
+			'alt' => $slide['alt'],
+			'loading' => $is_initial ? 'eager' : 'lazy',
+			'fetchpriority' => $is_initial ? 'high' : 'low',
+			'decoding' => 'async',
+			'sizes' => '(max-width: 700px) 100vw, 54vw',
+		) );
+	} else {
+		printf( '<img class="hero-gallery-photo" src="%1$s" alt="%2$s" width="1300" height="1040" loading="%3$s" decoding="async"%4$s>', esc_url( $custom_url ), esc_attr( $slide['alt'] ), $is_initial ? 'eager' : 'lazy', $is_initial ? ' fetchpriority="high"' : '' );
+	}
+else : ?>
+<picture>
+<?php if ( $mobile_url ) : ?><source media="(max-width: 700px)" srcset="<?php echo esc_url( $mobile_url ); ?>" type="image/webp"><?php endif; ?>
+<img class="hero-gallery-photo" src="<?php echo esc_url( $asset ); ?>" alt="<?php echo esc_attr( $slide['alt'] ); ?>" width="1300" height="1040" loading="<?php echo $is_initial ? 'eager' : 'lazy'; ?>" decoding="async"<?php echo $is_initial ? ' fetchpriority="high"' : ''; ?>>
+</picture>
 <?php endif; ?>
-<div class="hero-caption"><span><?php esc_html_e( 'ESSENTIALS FOR THE PROFESSION', 'daraz-law-shop' ); ?></span><span>DARAZ LAW SHOP</span></div>
+</div>
+<?php endforeach; ?>
+</div>
+<div class="hero-gallery-gradient" aria-hidden="true"></div>
+<div class="hero-gallery-eyebrow" aria-hidden="true"><span class="hero-gallery-rule"></span><?php esc_html_e( 'THE DARAZ EDIT', 'daraz-law-shop' ); ?></div>
+<div class="hero-caption"><span class="hero-gallery-caption"><?php echo esc_html( get_theme_mod( 'daraz_slide_1_caption', $slide_images[0]['caption'] ) ); ?></span><span>DARAZ LAW SHOP</span></div>
+<div class="hero-gallery-controls" aria-label="<?php esc_attr_e( 'Slideshow controls', 'daraz-law-shop' ); ?>">
+<button class="hero-gallery-arrow" type="button" data-slide-prev aria-label="<?php esc_attr_e( 'Previous photograph', 'daraz-law-shop' ); ?>" title="<?php esc_attr_e( 'Previous', 'daraz-law-shop' ); ?>"><span aria-hidden="true">←</span></button>
+<div class="hero-gallery-dots" role="group" aria-label="<?php esc_attr_e( 'Choose photograph', 'daraz-law-shop' ); ?>">
+<?php foreach ( $slide_images as $index => $slide ) : ?>
+<button type="button" class="hero-gallery-dot<?php echo 0 === $index ? ' is-active' : ''; ?>" data-slide-to="<?php echo esc_attr( $index ); ?>" aria-pressed="<?php echo 0 === $index ? 'true' : 'false'; ?>" aria-label="<?php echo esc_attr( sprintf( __( 'Show photograph %d', 'daraz-law-shop' ), $index + 1 ) ); ?>"><span></span></button>
+<?php endforeach; ?>
+</div>
+<button class="hero-gallery-arrow" type="button" data-slide-next aria-label="<?php esc_attr_e( 'Next photograph', 'daraz-law-shop' ); ?>" title="<?php esc_attr_e( 'Next', 'daraz-law-shop' ); ?>"><span aria-hidden="true">→</span></button>
+<span class="hero-gallery-counter" aria-hidden="true"><span data-slide-current>01</span><span class="hero-gallery-counter-slash">/</span><?php echo esc_html( sprintf( '%02d', count( $slide_images ) ) ); ?></span>
+</div>
 </div>
 </section>
 

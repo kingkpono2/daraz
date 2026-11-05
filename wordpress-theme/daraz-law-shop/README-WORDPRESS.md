@@ -80,3 +80,20 @@ The 1.2 conversion changes specifically address discovered gaps:
 **Migration cautions / launch blockers:** The live site uses builder-managed homepage/contact content. Test on a clone first, and remove/replace obsolete page-builder shortcodes before publishing. The template suppresses known raw obsolete homepage/contact builder markup, but third-party block/shortcode behavior depends on active plugins. Existing product titles such as **DUTCH**, **BRUTT**, **SAPPHIRE** do not explain the product; enrich each with a descriptive subtitle, real specifications and approved photos in WooCommerce. Category labels including **DARAZ** and **Uncategorized** should be replaced by descriptive collections within WordPress, with careful permanent URL redirects if slugs change. Preserve existing real reviews, orders, page slugs and products; never overwrite newer live files or database records with GitHub copies.
 
 **Quality standard, not a certification:** A-grade launch requires real WordPress staging QA, order/payment (sandbox) and responsive browser checks, accessibility testing and actual Core Web Vitals. Automated PHP lint and package validation are necessary but do not validate a live checkout, payment gateway, Google rankings or conversion uplift. Do not deploy the theme directly onto the existing store without a database/file backup and a verified staging migration.
+
+
+## v1.3 — Three real Daraz photographs, fitted to a smaller homepage slider
+
+The current homepage's **46% editorial left side / 54% photography right side stays intact**. Only the image pane becomes a refined three-photo carousel, with real images discovered on \`www.darazlawshop.com\` and permanently bundled into the theme:
+
+1. **Legalwear with distinction** — three legal professionals with gowns and wigs (\`hero-legalwear.webp\`).
+2. **Crafted for the profession** — a legal professional with wig and gown (\`hero-professional.webp\`).
+3. **Meet the Daraz community** — two legal professionals with real Daraz shopping bags (\`hero-community.webp\`).
+
+Photo evidence, exact original first-party media URLs, crop methods, and filenames are recorded in \`assets/images/hero/sources.json\`. The pre-approved crops are committed to GitHub, not hotlinked and not generated people. **Desktop 1440×1200** and **mobile 720×600** WebP variants preserve heads, wigs, shopping bags and legalwear in the narrower box without distortion, using a soft background extension when cropping would remove a subject. Asset regeneration is documented in \`tools/prepare_hero_assets.py\`; a normal theme ZIP build needs no network.
+
+The gallery cross-fades gently every 6.8 seconds, pauses on focus/hover/background and out of view, offers accessible labeled controls, keyboard arrows, swipe support and reduced-motion settings, and retains the existing shopping CTAs. Text stays on the original left side, outside the changing photos.
+
+Under **Appearance → Customize → Homepage photo slider**, you can replace any of the three images and captions. The existing Hero photograph setting remains a backward-compatible override for slide 1. Uploaded WordPress images use responsive \`srcset\` where available.
+
+No changes have been deployed to the live WordPress installation; install on a backed-up staging site to test with existing products and checkout.
