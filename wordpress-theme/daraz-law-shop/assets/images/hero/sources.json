@@ -1,0 +1,47 @@
+[
+  {
+    "filename": "hero-legalwear.webp",
+    "mobile_filename": "hero-legalwear-mobile.webp",
+    "source_url": "https://www.darazlawshop.com/wp-content/uploads/2024/01/406201635_936988071199897_5211724824284611170_n.jpg",
+    "source_pixels": [
+      1440,
+      1248
+    ],
+    "output_pixels": [
+      1440,
+      1200
+    ],
+    "method": "cover",
+    "alt_text": "Three Nigerian legal professionals in Daraz courtwear"
+  },
+  {
+    "filename": "hero-professional.webp",
+    "mobile_filename": "hero-professional-mobile.webp",
+    "source_url": "https://www.darazlawshop.com/wp-content/uploads/2024/01/405773936_934089611489743_1822998598057115461_n.jpg",
+    "source_pixels": [
+      1080,
+      1080
+    ],
+    "output_pixels": [
+      1440,
+      1200
+    ],
+    "method": "studio-blend",
+    "alt_text": "Legal professional in gown and neck bands beside a traditional wig"
+  },
+  {
+    "filename": "hero-community.webp",
+    "mobile_filename": "hero-community-mobile.webp",
+    "source_url": "https://www.darazlawshop.com/wp-content/uploads/2024/01/294799034_5696098660402172_2739760369760199759_n-1.jpg",
+    "source_pixels": [
+      2048,
+      1148
+    ],
+    "output_pixels": [
+      1440,
+      1200
+    ],
+    "method": "studio-blend",
+    "alt_text": "Two legal professionals displaying Daraz branded shopping bags"
+  }
+]
