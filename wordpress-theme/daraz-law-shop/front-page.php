@@ -21,7 +21,22 @@ $hero_url = get_theme_mod( 'daraz_hero_image', '' );
 </div>
 <div class="hero-visual">
 <?php if ( $hero_url ) : ?>
-<img class="hero-uploaded-image" src="<?php echo esc_url( $hero_url ); ?>" alt="<?php esc_attr_e( 'Daraz Law Shop collection', 'daraz-law-shop' ); ?>" fetchpriority="high">
+<?php
+$hero_attachment = attachment_url_to_postid( $hero_url );
+if ( $hero_attachment ) {
+	// Generate responsive srcset and prioritize the image that paints first.
+	echo wp_get_attachment_image( $hero_attachment, 'daraz_hero', false, array(
+		'class'         => 'hero-uploaded-image',
+		'alt'           => __( 'Daraz Law Shop professional legalwear collection', 'daraz-law-shop' ),
+		'fetchpriority' => 'high',
+		'loading'       => 'eager',
+		'decoding'      => 'async',
+		'sizes'         => '(max-width: 700px) 100vw, 54vw',
+	) );
+} else {
+	printf( '<img class="hero-uploaded-image" src="%1$s" alt="%2$s" fetchpriority="high" decoding="async" width="1600" height="1200">', esc_url( $hero_url ), esc_attr__( 'Daraz Law Shop professional legalwear collection', 'daraz-law-shop' ) );
+}
+?>
 <?php else : ?>
 <?php daraz_editorial_crop( '470 59 554 430', 'hero-editorial-image' ); ?>
 <?php endif; ?>
@@ -100,6 +115,25 @@ endif; ?>
 else : ?>
 <p class="empty-products"><?php esc_html_e( 'Install and activate WooCommerce to display your products here.', 'daraz-law-shop' ); ?></p>
 <?php endif; ?>
+</section>
+
+<section class="container search-intent-section" aria-labelledby="legalwear-guide-heading">
+<div class="search-intent-copy">
+<p class="eyebrow"><?php esc_html_e( 'THE PRACTICE / THE DETAILS', 'daraz-law-shop' ); ?></p>
+<h2 id="legalwear-guide-heading"><?php esc_html_e( 'Legalwear for the Nigerian bar.', 'daraz-law-shop' ); ?></h2>
+<p><?php esc_html_e( 'Explore essential court attire for legal professionals in Nigeria, including barrister wigs, barrister gowns, court bands and complementary accessories. Each product page provides available options, prices and details to help you choose what suits your practice.', 'daraz-law-shop' ); ?></p>
+<a class="text-link" href="<?php echo esc_url( $shop_url ); ?>"><?php esc_html_e( 'Browse professional legalwear', 'daraz-law-shop' ); ?> ↗</a>
+</div>
+<div class="search-intent-aside">
+<h3><?php esc_html_e( 'A considered fit starts here.', 'daraz-law-shop' ); ?></h3>
+<p><?php esc_html_e( 'Choosing a gown or another essential? Review our size guidance, explore the catalogue, or ask a question before placing your order.', 'daraz-law-shop' ); ?></p>
+<?php
+$size_guide = get_page_by_path( 'size-guide', OBJECT, 'page' );
+$faq_page = get_page_by_path( 'faq', OBJECT, 'page' );
+?>
+<?php if ( $size_guide && 'publish' === $size_guide->post_status ) : ?><a href="<?php echo esc_url( get_permalink( $size_guide ) ); ?>"><?php esc_html_e( 'Size guide', 'daraz-law-shop' ); ?> ↗</a><?php endif; ?>
+<?php if ( $faq_page && 'publish' === $faq_page->post_status ) : ?><a href="<?php echo esc_url( get_permalink( $faq_page ) ); ?>"><?php esc_html_e( 'Frequently asked questions', 'daraz-law-shop' ); ?> ↗</a><?php endif; ?>
+</div>
 </section>
 
 <section class="story-panel" aria-labelledby="story-heading">

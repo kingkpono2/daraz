@@ -4,7 +4,7 @@ Theme URI: https://github.com/kingkpono2/daraz
 Author: Almond Systems
 Author URI: https://almondsystems.com.ng/
 Description: A refined, responsive WooCommerce storefront for legalwear, with native WordPress content, editorial homepage, and real orders and inventory.
-Version: 1.0.0
+Version: 1.1.0
 Requires at least: 6.2
 Requires PHP: 7.4
 License: GPL-2.0-or-later
@@ -27,3 +27,30 @@ Tags: e-commerce, custom-logo, custom-menu, featured-images, threaded-comments, 
 @media(max-width:700px){.container{width:calc(100% - 36px)}.announcement{font-size:.52rem;letter-spacing:.08em}.announcement-inner{justify-content:center;text-align:center;min-height:31px}.announcement a{display:none}.header-inner{gap:14px;min-height:74px}.header-actions{gap:10px}.account-link,.header-bag{width:24px}.wordmark-name{font-size:2rem}.wordmark-sub{font-size:.43rem}.home-hero{display:flex;flex-direction:column;min-height:0}.hero-copy-inner{width:calc(100% - 48px);padding:48px 0 50px}.home-hero h1{font-size:clamp(3.7rem,12vw,5.8rem);margin:18px 0 23px}.hero-lede{font-size:1.12rem}.hero-visual{min-height:345px}.hero-caption{inset:auto 16px 15px;font-size:.52rem}.promises{grid-template-columns:1fr;gap:0;padding-block:8px}.promise{padding:13px 0}.promise+.promise{border-left:0;border-top:1px solid var(--line);padding-left:0}.section-heading{align-items:flex-start;flex-direction:column;gap:17px}.section-heading h2{font-size:clamp(2.5rem,9vw,4rem)}.section-heading .text-link{margin:0}.category-grid{gap:11px}.category-image{height:220px}.category-meta{inset:auto 12px 14px}.category-meta h3{font-size:1.6rem}.story-panel{display:flex;flex-direction:column}.story-copy{padding:60px 24px}.story-copy h2{font-size:clamp(2.7rem,10vw,4rem)}.story-visual{min-height:290px}.journal-grid{grid-template-columns:1fr;gap:20px}.info-page-grid{grid-template-columns:1fr;gap:28px}.contact-cards{grid-template-columns:1fr}.footer-main{grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 20px;padding-block:54px 50px}.footer-brand{grid-column:1/-1}.footer-bottom{display:block;padding-bottom:78px}.footer-bottom span{display:block;margin:7px 0}.wa-pill{left:13px;bottom:13px;padding:12px}.wa-pill span{display:none}.woocommerce ul.products,.woocommerce-page ul.products{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.woocommerce ul.products li.product .woocommerce-loop-product__title{font-size:1.42rem;padding-inline:10px}.woocommerce ul.products li.product .price{font-size:1.12rem;padding-inline:10px}.woocommerce ul.products li.product .button{margin-inline:9px;padding:10px 6px;font-size:.63rem;letter-spacing:0}.woocommerce ul.products li.product a img{aspect-ratio:1}.shop-filters{grid-template-columns:1fr}.woocommerce .woocommerce-ordering{float:none}.woocommerce .woocommerce-result-count{float:none;margin-bottom:12px}.woocommerce div.product .woocommerce-tabs{padding-top:20px}.woocommerce .cart-collaterals .cart_totals{padding:14px}.woocommerce table.shop_table td,.woocommerce table.shop_table th{padding:9px}}
 @media(max-width:380px){.wordmark-name{font-size:1.7rem}.header-inner{gap:10px}.category-image{height:185px}.category-meta h3{font-size:1.45rem}.woocommerce ul.products li.product .button{font-size:.59rem}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
+
+
+/* Crawlable, visible breadcrumb navigation, aligned with BreadcrumbList schema. */
+.daraz-breadcrumbs{padding:22px 0 0;color:var(--muted);font-size:.75rem}
+.daraz-breadcrumbs ol{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:0}
+.daraz-breadcrumbs li{display:inline-flex;align-items:center;max-width:100%;overflow-wrap:anywhere}
+.daraz-breadcrumbs li+li:before{content:"/";display:inline-block;color:#a4a69c;margin-right:8px}
+.daraz-breadcrumbs a{color:var(--dark-gold);text-underline-offset:3px}
+.daraz-breadcrumbs a:hover{text-decoration:underline}
+.daraz-breadcrumbs [aria-current=page]{color:var(--ink)}
+.daraz-breadcrumbs+.page-intro{padding-top:28px}
+
+/* Natural, helpful category/service context, visible to customers and crawlers. */
+.search-intent-section{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(280px,.65fr);gap:clamp(35px,6vw,100px);align-items:center;border-top:1px solid var(--line);padding-block:clamp(55px,6vw,98px)}
+.search-intent-copy h2{max-width:13ch;margin:12px 0 21px;font-size:clamp(2.5rem,4.3vw,4.5rem);text-wrap:balance}
+.search-intent-copy p:not(.eyebrow){max-width:670px;font:1.08rem/1.8 var(--serif);color:#4b5149}
+.search-intent-copy .text-link{margin-top:8px}
+.search-intent-aside{padding:35px;border:1px solid var(--line);background:#fff}
+.search-intent-aside h3{margin:0 0 15px;font-size:1.95rem}
+.search-intent-aside p{color:var(--muted);font-size:.9rem}
+.search-intent-aside a{display:block;width:fit-content;margin-top:16px;padding-bottom:3px;border-bottom:1px solid var(--gold);font-weight:650;font-size:.8rem}
+@media(max-width:750px){
+  .search-intent-section{grid-template-columns:1fr;gap:28px;padding-block:55px}
+  .search-intent-copy h2{font-size:clamp(2.5rem,10vw,4rem)}
+  .search-intent-aside{padding:26px}
+  .daraz-breadcrumbs{padding-top:16px;font-size:.72rem}
+}

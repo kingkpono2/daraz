@@ -3,6 +3,7 @@
 get_header(); ?>
 <main id="primary" class="site-main container content-container">
 <?php while ( have_posts() ) : the_post(); ?>
+<?php daraz_seo_breadcrumbs(); ?>
 <header class="page-intro"><p class="eyebrow"><?php esc_html_e( 'THE FIT GUIDE', 'daraz-law-shop' ); ?></p><h1><?php the_title(); ?></h1></header>
 <div class="info-page-grid"><div class="entry-content">
 <?php if ( trim( get_the_content() ) ) : the_content(); else : ?>

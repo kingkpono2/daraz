@@ -4,6 +4,7 @@ get_header();
 ?>
 <main id="primary" class="site-main container content-container">
 <?php while ( have_posts() ) : the_post(); ?>
+<?php daraz_seo_breadcrumbs(); ?>
 <header class="page-intro"><p class="eyebrow"><?php esc_html_e( 'HELP & GUIDANCE', 'daraz-law-shop' ); ?></p><h1><?php the_title(); ?></h1><p><?php esc_html_e( 'A few helpful answers before you order.', 'daraz-law-shop' ); ?></p></header>
 <div class="info-page-grid"><div>
 <?php if ( trim( get_the_content() ) ) : ?><div class="entry-content"><?php the_content(); ?></div><?php else : ?>

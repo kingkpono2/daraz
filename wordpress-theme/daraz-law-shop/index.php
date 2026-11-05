@@ -2,6 +2,7 @@
 /** Posts index. @package Daraz_Law_Shop */
 get_header(); ?>
 <main id="primary" class="site-main container content-container">
+<?php daraz_seo_breadcrumbs(); ?>
 <header class="page-intro"><p class="eyebrow"><?php esc_html_e( 'THE JOURNAL', 'daraz-law-shop' ); ?></p><h1><?php echo esc_html( is_home() && ! is_front_page() ? single_post_title( '', false ) : __( 'Insights & stories', 'daraz-law-shop' ) ); ?></h1></header>
 <?php if ( have_posts() ) : ?><div class="journal-grid">
 <?php while ( have_posts() ) : the_post(); get_template_part( 'template-parts/content' ); endwhile; ?>

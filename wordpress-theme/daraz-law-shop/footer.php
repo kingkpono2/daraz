@@ -27,6 +27,21 @@ endif; ?>
 else : ?>
 <ul><li><a href="<?php echo esc_url( home_url( '/about/' ) ); ?>"><?php esc_html_e( 'Our story', 'daraz-law-shop' ); ?></a></li>
 <li><a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Contact', 'daraz-law-shop' ); ?></a></li>
+<?php
+$help_links = array(
+	'faq'                  => __( 'FAQs', 'daraz-law-shop' ),
+	'size-guide'           => __( 'Size guide', 'daraz-law-shop' ),
+	'delivery-returns'     => __( 'Delivery & returns', 'daraz-law-shop' ),
+	'track-order'          => __( 'Track an order', 'daraz-law-shop' ),
+	'privacy-policy'       => __( 'Privacy policy', 'daraz-law-shop' ),
+	'terms-and-conditions' => __( 'Terms & conditions', 'daraz-law-shop' ),
+);
+foreach ( $help_links as $slug => $label ) :
+	$page = get_page_by_path( $slug, OBJECT, 'page' );
+	if ( $page instanceof WP_Post && 'publish' === $page->post_status ) :
+	?>
+<li><a href="<?php echo esc_url( get_permalink( $page ) ); ?>"><?php echo esc_html( $label ); ?></a></li>
+<?php endif; endforeach; ?>
 <?php if ( function_exists( 'wc_get_page_permalink' ) ) : ?><li><a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>"><?php esc_html_e( 'My account', 'daraz-law-shop' ); ?></a></li><?php endif; ?></ul>
 <?php endif; ?></div>
 <div class="footer-column"><h2><?php esc_html_e( 'Get in touch', 'daraz-law-shop' ); ?></h2>

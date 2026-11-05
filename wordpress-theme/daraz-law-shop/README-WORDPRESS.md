@@ -42,3 +42,23 @@ The original Node.js prototype remains untouched in \`public/\` and can still be
 - Verify variable product sizes, sale prices, inventory behavior, shopping cart, real sandbox gateway, failed payments, verified callbacks, order emails, refunds, and password reset.
 - Run accessibility and mobile checks, PageSpeed, schema/SEO plugin checks, and backup/staging tests.
 - Use a full-site backup and a staging site before replacing any existing live WordPress theme.
+
+
+## SEO: ranking-ready foundations
+
+The theme includes \`inc/seo.php\` (fallback behavior only when no dedicated SEO plugin is active):
+
+- Editable homepage search title, meta description and default social image under **Appearance → Customize → Daraz Search Appearance**.
+- Context-aware, escaped descriptions for actual WooCommerce products and categories, articles and WordPress pages, using real content rather than stuffed keyword lists.
+- Canonical URLs for paginated archives, while respecting **WordPress core** canonical tags on singular pages (no duplicate canonical tags).
+- Open Graph, X/Twitter previews, date metadata on articles, and a merchant **OnlineStore** schema on the homepage.
+- **BlogPosting** schema for original editorial articles and **BreadcrumbList** markup paired with visible breadcrumb navigation.
+- Built-in WordPress robots filters for excluding shopping cart, account, checkout, order tracking and filtered/faceted pages. WordPress's built-in XML sitemaps remain available at \`/wp-sitemap.xml\`.
+- Preserves **WooCommerce's built-in Product, Offer and review/availability structured data**, including variation handling; this theme does **not** inject a competing Product schema.
+- Automatically defers metadata and JSON-LD output when Yoast SEO, Rank Math, All in One SEO, SEOPress, Slim SEO or The SEO Framework is detected.
+
+**Recommended SEO setup for launch:** use one SEO plugin (not several) to manage per-product/page metadata and redirects, set your real site title and approved logo, upload unique product photographs with useful alt text, write detailed category introductions and size/fit guidance, publish your real delivery/returns and business contact details, enable Search Console and submit your XML sitemap. Test representative pages with Google Rich Results Test and PageSpeed Insights. Keep descriptive canonical links and ensure product stock/price matches what shoppers can actually purchase.
+
+The \`front-page.php\` includes additional relevant, non-deceptive legalwear information and links to helpful, published information pages. The hero attachment now uses WordPress-generated image sizes and \`srcset\` with a high-priority LCP image; use optimized WebP/AVIF uploads for best load time. Replace the large reference editorial PNGs with licensed, approved and compressed source imagery before launch.
+
+**Important:** SEO metadata, schema and theme performance are technical foundations, **not a promise of first-page rankings, a 95+ SEO score, or the number-one result**. Actual rankings also depend on search intent, competitive landscape, content originality, speed, trustworthy business signals, inbound links and Google indexing.

@@ -7,6 +7,7 @@ $whatsapp = daraz_sanitize_digits( get_theme_mod( 'daraz_whatsapp', '23480339103
 ?>
 <main id="primary" class="site-main container content-container">
 <?php while ( have_posts() ) : the_post(); ?>
+<?php daraz_seo_breadcrumbs(); ?>
 <header class="page-intro"><p class="eyebrow"><?php esc_html_e( 'WE ARE HERE TO HELP', 'daraz-law-shop' ); ?></p><h1><?php the_title(); ?></h1><p><?php esc_html_e( 'Questions about a product, sizing or an existing order? Get in touch.', 'daraz-law-shop' ); ?></p></header>
 <div class="contact-cards">
 <?php if ( $phone ) : ?><section class="contact-card"><h2><?php esc_html_e( 'Call us', 'daraz-law-shop' ); ?></h2><a href="tel:<?php echo esc_attr( preg_replace( '/[^+0-9]/', '', $phone ) ); ?>"><?php echo esc_html( $phone ); ?></a></section><?php endif; ?>
