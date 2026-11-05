@@ -97,3 +97,7 @@ The gallery cross-fades gently every 6.8 seconds, pauses on focus/hover/backgrou
 Under **Appearance → Customize → Homepage photo slider**, you can replace any of the three images and captions. The existing Hero photograph setting remains a backward-compatible override for slide 1. Uploaded WordPress images use responsive \`srcset\` where available.
 
 No changes have been deployed to the live WordPress installation; install on a backed-up staging site to test with existing products and checkout.
+
+
+### Final restraint pass
+For the compact homepage box, the carousel displays **just two authentic photographs** (legalwear group and professional portrait). The third original is retained in source assets for optional future use but **not rendered**. This keeps the layout elegant, avoids visual clutter and reduces image loading. Photos remain proportionally fitted to the existing panel with portrait-safe framing.

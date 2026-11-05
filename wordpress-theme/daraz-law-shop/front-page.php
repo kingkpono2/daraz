@@ -31,6 +31,8 @@ $slide_images = array(
 		'source' => 'https://www.darazlawshop.com/wp-content/uploads/2024/01/294799034_5696098660402172_2739760369760199759_n-1.jpg',
 	),
 );
+// Keep the hero restrained: two original, expertly fitted photographs only.
+$slide_images = array_slice( $slide_images, 0, 2 );
 ?>
 <main id="primary" class="site-main">
 <section class="home-hero" aria-labelledby="hero-title">
